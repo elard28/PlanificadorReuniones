@@ -69,18 +69,3 @@ int main()
 
 	return 0;
 }
-/*
-	char ch;
- 
-   printf("Ingrese un caracter: ");
- ch = getchar();
- 
- if (isdigit(ch))
-   printf("Es un numero");
- else if (isalpha(ch)) {
-   if (isupper(ch))
-     printf("Es una letra mayuscula");
-   else
-     printf("Es una letra minuscula");
- } else
-   printf("Es un caracter");*/
