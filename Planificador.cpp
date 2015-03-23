@@ -131,7 +131,7 @@ int main()
 	count_day();
 	//print();
 
-    cout<<"----------------------"<<endl;
+    cout<<"_____________________________________________"<<endl<<endl;
 
     days.push_back("mon");
     days.push_back("tue");
@@ -141,9 +141,20 @@ int main()
     days.push_back("sat");
     //days.push_back("sun");
 
-    schedule sch;
-    sch.add_text("a.txt");
-    sch.print_schedule();
+    schedule a;
+    a.add_text("a.txt");
+    a.print_schedule();
+
+    cout<<"---------------"<<endl;
+
+    schedule b;
+    b.add_text("b.txt");
+    b.print_schedule();
+
+    cout<<"---------------"<<endl;
+
+    schedule res=compare(a,b);
+    res.print_schedule();
 
 	return 0;
 }

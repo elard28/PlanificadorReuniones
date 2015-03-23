@@ -67,26 +67,81 @@ struct hour
 			no_empty=1;
 		}
 
-		hour cross(hour &hour_cross) //mayor y luego menor
+		hour cross(hour &hour2) //mayor y luego menor
 		{
 			hour result;
-			//int hini;
-			//int mini;
-			//int hend;
-			//int mend;
-			if(hour_ini <= hour_cross.hour_ini && hour_end >= hour_cross.hour_end)
-				result.set_values(hour_cross.hour_ini, hour_cross.minute_ini, hour_cross.hour_end, hour_cross.minute_end);
 
-			else if(hour_ini >= hour_cross.hour_ini && hour_end <= hour_cross.hour_end)
-				result.set_values(hour_ini, minute_ini, hour_end, minute_end);
-
-			else if(hour_ini <= hour_cross.hour_ini && hour_end <= hour_cross.hour_end && hour_cross.hour_ini <= hour_end)
-				result.set_values(hour_cross.hour_ini, hour_cross.minute_ini, hour_end, hour_end);
-
-			else if(hour_ini >= hour_cross.hour_ini && hour_end >= hour_cross.hour_end && hour_cross.hour_ini >= hour_end)
-				result.set_values(hour_ini, minute_ini, hour_cross.hour_end, hour_cross.minute_end);
-
+			if( hour_end <= hour2.hour_ini || 
+				hour2.hour_end <= hour_ini)
 			return result;
+
+			int hini=0;
+			int mini=0;
+			int hend=0;
+			int mend=0;
+
+			/*if(hour_end == hour2.hour_ini)
+			{
+				if(minute_end < hour2.minute_ini)
+			}*/
+
+			if( hour_ini <= hour2.hour_ini && 
+				hour_end >= hour2.hour_end)
+			{
+				//result.set_values(hour2.hour_ini, hour2.minute_ini, hour2.hour_end, hour2.minute_end);
+				hini=hour2.hour_ini;
+				mini=hour2.minute_ini;
+				hend=hour2.hour_end;
+				mend=hour2.minute_end;
+			}
+				
+			else if(hour_ini >= hour2.hour_ini && 
+					hour_end <= hour2.hour_end)
+			{
+				//result.set_values(hour_ini, minute_ini, hour_end, minute_end);
+				hini=hour_ini;
+				mini=minute_ini;
+				hend=hour_end;
+				mend=minute_end;
+			}
+				
+			else if(hour_ini <= hour2.hour_ini && 
+					hour_end <= hour2.hour_end && 
+					hour2.hour_ini < hour_end)
+			{
+				//result.set_values(hour2.hour_ini, hour2.minute_ini, hour_end, hour_end);
+				hini=hour2.hour_ini;
+				mini=hour2.minute_ini;
+				hend=hour_end;
+				mend=minute_end;
+			}
+				
+			else if(hour_ini >= hour2.hour_ini && 
+					hour_end >= hour2.hour_end && 
+					hour2.hour_end > hour_ini)
+			{
+				//result.set_values(hour_ini, minute_ini, hour2.hour_end, hour2.minute_end);
+				hini=hour_ini;
+				mini=minute_ini;
+				hend=hour2.hour_end;
+				mend=hour2.minute_end;
+			}
+
+			if(hour_ini == hour2.hour_ini)
+			{
+				if(minute_ini >= hour2.minute_ini)
+					mini=minute_ini;
+				else mini=hour2.minute_ini;
+			}
+
+			if(hour_end == hour2.hour_end)
+			{
+				if(minute_end <= hour2.minute_end)
+					mend=minute_end;
+				else mend=hour2.minute_end;
+			}
+
+			result.set_values(hini,mini,hend,mend);
 		}
 
 		void print()

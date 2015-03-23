@@ -56,8 +56,6 @@ public:
   				hour time;
   				time.set_text(cstr);
   				hr[day].push_back(time);
-  				cout<<endl;
-  				cout<<endl;
   			}
     	}
     	fe.close();
