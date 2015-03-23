@@ -34,11 +34,8 @@ void load(char* filename, char* username){
 			times.push_back(r_time);
 		}
     }
-<<<<<<< HEAD
-    calendar.insert( std::pair<string,type_time>(day, times) );
-=======
+
     calendar.insert( pair<string,type_time>(day, times) );
->>>>>>> 8afb8d87a57fd82da092a2a837e5bba10b66858e
     users.insert( pair<string,type_calendar>(username, calendar) );
 }
 
@@ -50,11 +47,9 @@ void print(vector<string> tmp_time){
 
 void print(map<string, type_time > tmp_day){
 	map<string,type_time>::iterator it = tmp_day.begin();
-<<<<<<< HEAD
+
 	cout << "day contains:\n";
-=======
-	cout << "time contains:\n";
->>>>>>> 8afb8d87a57fd82da092a2a837e5bba10b66858e
+
  	for (; it!=tmp_day.end(); ++it){
     	cout << "   " << it->first << " => ";
     	print(it->second);
@@ -64,11 +59,9 @@ void print(map<string, type_time > tmp_day){
 
 void print(){
 	map<string,type_calendar>::iterator it = users.begin();
-<<<<<<< HEAD
+
 	cout << "archives contains:\n";
-=======
-	cout << "mymap contains:\n";
->>>>>>> 8afb8d87a57fd82da092a2a837e5bba10b66858e
+
  	for (it = users.begin(); it!=users.end(); ++it){
     	cout << it->first << " => " << '\n';
     	print(it->second);
