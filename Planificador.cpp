@@ -138,10 +138,28 @@ int convertir(char *times)
     return (hour * 60) + minute;
 }
 
+vector<schedule> arr;
+
+void ingresar(char* filename){
+	schedule a;
+	a.add_text(filename);
+	arr.push_back(a);
+}
+
+void calcular(int time){
+	schedule cal;
+	cal = compare(time, arr[0],arr[1]);
+	for (int i=2; i < arr.size();i++){
+		cal = compare(time,cal,arr[i]);
+	}
+	cal.print_schedule();
+}
+
 int main(int argc, char const *argv[])
 {
     load("a.txt", "a");
 	load("b.txt", "b");
+
 	count_day();
 	//print();
 
@@ -155,6 +173,12 @@ int main(int argc, char const *argv[])
     days.push_back("sat");
     //days.push_back("sun");
 
+    ingresar("a.txt");
+    ingresar("b.txt");
+    //ingresar("c.txt");
+    calcular(45);
+
+/*
     schedule a;
     a.add_text("a.txt");
     a.print_schedule();
@@ -169,6 +193,8 @@ int main(int argc, char const *argv[])
 
     schedule res=compare(45,a,b);
     res.print_schedule();
+
+*/
 
     /*for (int i = 1; i < argc; ++i)
     {
