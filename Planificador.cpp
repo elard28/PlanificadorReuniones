@@ -24,7 +24,7 @@ void load(char* filename, char* username){
     
     while (ar >> buff){
 		if (isalpha(buff[0])){
-			calendar.insert( std::pair<string,type_time>(day,times) );
+			calendar.insert( pair<string,type_time>(day,times) );
 			times.clear();
 			day = buff;
 		}else{
@@ -33,39 +33,63 @@ void load(char* filename, char* username){
 		}
     }
     calendar.insert( std::pair<string,type_time>(day, times) );
-    users.insert( std::pair<string,type_calendar>(username, calendar) );
+    users.insert( pair<string,type_calendar>(username, calendar) );
 }
 
 void print(vector<string> tmp_time){
-	std::vector<string>::iterator it = tmp_time.begin();
+	vector<string>::iterator it = tmp_time.begin();
  	for (; it!=tmp_time.end(); ++it)
-    	std::cout << "   " << *it << " ";	
+    	cout << "   " << *it << " ";	
 }
 
 void print(map<string, type_time > tmp_day){
-	std::map<string,type_time>::iterator it = tmp_day.begin();
-	std::cout << "time contains:\n";
+	map<string,type_time>::iterator it = tmp_day.begin();
+	cout << "day contains:\n";
  	for (; it!=tmp_day.end(); ++it){
-    	std::cout << "   " << it->first << " => ";
+    	cout << "   " << it->first << " => ";
     	print(it->second);
     	cout << endl;	
     }
 }
 
 void print(){
-	std::map<string,type_calendar>::iterator it = users.begin();
-	std::cout << "mymap contains:\n";
+	map<string,type_calendar>::iterator it = users.begin();
+	cout << "archives contains:\n";
  	for (it = users.begin(); it!=users.end(); ++it){
-    	std::cout << it->first << " => " << '\n';
+    	cout << it->first << " => " << '\n';
     	print(it->second);
  	}
 } 
+
+void count_day(){
+	string days[7] = {"mon","tue","wed","thu","fri","sat","sun"};
+	int n_days[7] = {0,0,0,0,0,0,0};
+
+	map<string,type_calendar>::iterator it = users.begin();
+
+	for (it = users.begin(); it!=users.end(); ++it){
+		map<string,type_time>::iterator it2 = it->second.begin();
+
+		for (; it2!=it->second.end(); ++it2){
+			for (int i=0; i<7;i++){
+				if (it2->first == days[i]){
+					n_days[i]++;
+					break;
+				}
+			}
+		}
+	}
+
+	for (int i=0;i<7;i++)
+		cout << days[i] << " = " << n_days[i] << endl;
+}
 
 int main()
 {
 	load("a.txt", "a");
 	load("b.txt", "b");
-	print();
+	count_day();
+	//print();
 
 	return 0;
 }
