@@ -92,6 +92,38 @@ void count_day(){
 		cout << days[i] << " = " << n_days[i] << endl;
 }
 
+
+
+
+
+
+
+//vector<schedule> schedules;
+vector<string> days;
+
+
+schedule compare(schedule a,schedule b)
+{
+    schedule result;
+    for (int i = 0; i < days.size(); ++i)
+    {
+        vector<hour> hour_a=a.get_day(days[i]);
+        vector<hour> hour_b=b.get_day(days[i]);
+
+        for (int j = 0; j < hour_a.size(); ++j)
+        {
+            for (int k = 0; k < hour_b.size(); ++k)
+            {
+                hour hour_cross=hour_a[j].cross(hour_b[k]);
+                if(hour_cross.no_empty)
+                    result.add_time(days[i],hour_cross);
+            }
+        }
+
+    }
+    return result;
+}
+
 int main()
 {
     load("a.txt", "a");
@@ -99,9 +131,19 @@ int main()
 	count_day();
 	//print();
 
+    cout<<"----------------------"<<endl;
+
+    days.push_back("mon");
+    days.push_back("tue");
+    days.push_back("wed");
+    days.push_back("thu");
+    days.push_back("fri");
+    days.push_back("sat");
+    //days.push_back("sun");
+
     schedule sch;
     sch.add_text("a.txt");
-    //sch.print_schedule();
+    sch.print_schedule();
 
 	return 0;
 }
