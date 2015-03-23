@@ -16,7 +16,7 @@ struct hour
 		int hour_end;
 		int minute_end;
 
-		bool no_empty;
+		bool is_valid;
 
 		hour(int hini,int mini,int hend,int mend)
 		{
@@ -24,12 +24,12 @@ struct hour
 			minute_ini=mini;
 			hour_end=hend;
 			minute_end=mend;
-			no_empty=1;
+			is_valid=1;
 		}
 		
 		hour()
 		{
-			no_empty=0;	
+			is_valid=0;	
 		};
 
 		void set_values(int hini,int mini,int hend,int mend)
@@ -38,19 +38,8 @@ struct hour
 			minute_ini=mini;
 			hour_end=hend;
 			minute_end=mend;
-			no_empty=1;
-		}
-		
-		void set_ini(int hini,int mini)
-		{
-			hour_ini=hini;
-			minute_ini=mini;
-		}
-
-		void set_end(int hend,int mend)
-		{
-			hour_end=hend;
-			minute_end=mend;
+			if(get_time_minutes() > 0)
+				is_valid=1;
 		}
 
 		void set_text(char *tok)
@@ -64,15 +53,22 @@ struct hour
 			hour_end=atoi(token);
 			token=strtok(NULL, ":-");
 			minute_end=atoi(token);
-			no_empty=1;
+			is_valid=1;
+		}
+
+		int get_time_minutes()
+		{
+			int minutes;
+			minutes=((hour_end-hour_ini)*60) + (minute_end - minute_ini);
+			return minutes;
 		}
 
 		hour cross(hour &hour2) //mayor y luego menor
 		{
 			hour result;
 
-			if( hour_end <= hour2.hour_ini || 
-				hour2.hour_end <= hour_ini)
+			if (hour_end < hour2.hour_ini ||
+				hour_ini > hour2.hour_end)
 			return result;
 
 			int hini=0;
@@ -80,12 +76,40 @@ struct hour
 			int hend=0;
 			int mend=0;
 
-			/*if(hour_end == hour2.hour_ini)
+			if(hour_end == hour2.hour_ini)
 			{
 				if(minute_end < hour2.minute_ini)
-			}*/
+				{
+					mini=minute_end;
+					mend=hour2.minute_ini;
+				}
+				else
+				{
+					mini=hour2.minute_ini;
+					mend=minute_end;
+				}
+				hini=hour_end;
+				hend=hour_end;
+			}
 
-			if( hour_ini <= hour2.hour_ini && 
+			else if(hour_ini == hour2.hour_end)
+			{
+				if(minute_ini < hour2.minute_end)
+				{
+					mini=minute_ini;
+					mend=hour2.minute_end;
+				}
+				else
+				{
+					mini=hour2.minute_end;
+					mend=minute_ini;
+				}
+				hini=hour_ini;
+				hend=hour_ini;
+			}
+
+
+			else if( hour_ini <= hour2.hour_ini && 
 				hour_end >= hour2.hour_end)
 			{
 				//result.set_values(hour2.hour_ini, hour2.minute_ini, hour2.hour_end, hour2.minute_end);

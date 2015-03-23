@@ -75,10 +75,13 @@ public:
 	{
 		for(map<string,vector<hour> >::iterator it=hr.begin(); it!=hr.end(); ++it)
     	{
-    		cout << it->first << " => ";
-    		for (int i = 0; i < it->second.size(); ++i)
-    			it->second[i].print();
-    		cout<<endl;
+    		if(it->second.size() > 0)
+    		{
+    			cout << it->first << " => ";
+    			for (int i = 0; i < it->second.size(); ++i)
+    				it->second[i].print();
+    			cout<<endl;
+    		}
     	}	
 	}
 

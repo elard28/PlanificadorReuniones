@@ -98,11 +98,13 @@ void count_day(){
 
 
 
-//vector<schedule> schedules;
+
+
+vector<schedule> schedules;
 vector<string> days;
 
 
-schedule compare(schedule a,schedule b)
+schedule compare(int min, schedule a,schedule b)
 {
     schedule result;
     for (int i = 0; i < days.size(); ++i)
@@ -115,7 +117,7 @@ schedule compare(schedule a,schedule b)
             for (int k = 0; k < hour_b.size(); ++k)
             {
                 hour hour_cross=hour_a[j].cross(hour_b[k]);
-                if(hour_cross.no_empty)
+                if(hour_cross.is_valid && hour_cross.get_time_minutes()>=min)
                     result.add_time(days[i],hour_cross);
             }
         }
@@ -124,14 +126,26 @@ schedule compare(schedule a,schedule b)
     return result;
 }
 
-int main()
+int convertir(char *times)
+{
+    int hour;
+    int minute;
+    char *token;
+    token=strtok(times,":");
+    hour=atoi(token);
+    token=strtok(NULL,":");
+    minute=atoi(token);
+    return (hour * 60) + minute;
+}
+
+int main(int argc, char const *argv[])
 {
     load("a.txt", "a");
 	load("b.txt", "b");
 	count_day();
 	//print();
 
-    cout<<"_____________________________________________"<<endl<<endl;
+    cout<<"_____________________________________________________________"<<endl<<endl;
 
     days.push_back("mon");
     days.push_back("tue");
@@ -145,16 +159,57 @@ int main()
     a.add_text("a.txt");
     a.print_schedule();
 
-    cout<<"---------------"<<endl;
+    cout<<"------------------------------------"<<endl;
 
     schedule b;
     b.add_text("b.txt");
     b.print_schedule();
+    cout<<endl;
+    cout<<"================Res================"<<endl;
 
-    cout<<"---------------"<<endl;
-
-    schedule res=compare(a,b);
+    schedule res=compare(45,a,b);
     res.print_schedule();
+
+    /*for (int i = 1; i < argc; ++i)
+    {
+        string tex=argv[i];
+        tex+=".txt";
+        char *cstr = new char [tex.length()+1];
+        strcpy (cstr, tex.c_str());
+        schedule sch;
+        sch.add_text(cstr);
+        schedules.push_back(sch);
+    }*/
+
+    /*char hora[6];
+    char file_a[100];
+    char file_b[100];
+
+    cout<<"Tiempo: ";
+    cin>>hora;
+    cout<<"Primer archivo: ";
+    cin>>file_a;
+    cout<<"Segundo archivo: ";
+    cin>>file_b;
+
+    int times = convertir(hora);
+
+    string tex1=argv[2];
+    tex1+=".txt";
+    char *cstr1 = new char [tex1.length()+1];
+    strcpy (cstr1, tex1.c_str());
+    schedule a;
+    a.add_text(cstr1);
+
+    string tex2=argv[3];
+    tex2+=".txt";
+    char *cstr2 = new char [tex2.length()+1];
+    strcpy (cstr2, tex2.c_str());
+    schedule b;
+    b.add_text(cstr2);
+
+    schedule res=compare(times,a,b);
+    res.print_schedule();*/
 
 	return 0;
 }
