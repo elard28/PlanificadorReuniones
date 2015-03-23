@@ -34,6 +34,7 @@ void load(char* filename, char* username){
 			times.push_back(r_time);
 		}
     }
+
     calendar.insert( pair<string,type_time>(day, times) );
     users.insert( pair<string,type_calendar>(username, calendar) );
 }
@@ -46,7 +47,9 @@ void print(vector<string> tmp_time){
 
 void print(map<string, type_time > tmp_day){
 	map<string,type_time>::iterator it = tmp_day.begin();
-	cout << "time contains:\n";
+
+	cout << "day contains:\n";
+
  	for (; it!=tmp_day.end(); ++it){
     	cout << "   " << it->first << " => ";
     	print(it->second);
@@ -56,7 +59,9 @@ void print(map<string, type_time > tmp_day){
 
 void print(){
 	map<string,type_calendar>::iterator it = users.begin();
-	cout << "mymap contains:\n";
+
+	cout << "archives contains:\n";
+
  	for (it = users.begin(); it!=users.end(); ++it){
     	cout << it->first << " => " << '\n';
     	print(it->second);
@@ -64,11 +69,35 @@ void print(){
 }
 
 
+void count_day(){
+	string days[7] = {"mon","tue","wed","thu","fri","sat","sun"};
+	int n_days[7] = {0,0,0,0,0,0,0};
+
+	map<string,type_calendar>::iterator it = users.begin();
+
+	for (it = users.begin(); it!=users.end(); ++it){
+		map<string,type_time>::iterator it2 = it->second.begin();
+
+		for (; it2!=it->second.end(); ++it2){
+			for (int i=0; i<7;i++){
+				if (it2->first == days[i]){
+					n_days[i]++;
+					break;
+				}
+			}
+		}
+	}
+
+	for (int i=0;i<7;i++)
+		cout << days[i] << " = " << n_days[i] << endl;
+}
+
 int main()
 {
     load("a.txt", "a");
 	load("b.txt", "b");
-	print();
+	count_day();
+	//print();
 
     schedule sch;
     sch.add_text("a.txt");
