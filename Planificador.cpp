@@ -71,6 +71,8 @@ int main()
 	print();
 
     schedule sch;
+    sch.add_text("a.txt");
+    //sch.print_schedule();
 
 	return 0;
 }
