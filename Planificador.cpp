@@ -5,9 +5,11 @@
 #include <ctype.h>
 #include <map>
 
+#include "schedule.h"
+
 using namespace std;
 
-typedef std::vector<string> type_time;
+typedef vector<string> type_time;
 typedef map<string, type_time > type_calendar;
 
 map<string,type_calendar > users;
@@ -24,7 +26,7 @@ void load(char* filename, char* username){
     
     while (ar >> buff){
 		if (isalpha(buff[0])){
-			calendar.insert( std::pair<string,type_time>(day,times) );
+			calendar.insert( pair<string,type_time>(day,times) );
 			times.clear();
 			day = buff;
 		}else{
@@ -32,40 +34,43 @@ void load(char* filename, char* username){
 			times.push_back(r_time);
 		}
     }
-    calendar.insert( std::pair<string,type_time>(day, times) );
-    users.insert( std::pair<string,type_calendar>(username, calendar) );
+    calendar.insert( pair<string,type_time>(day, times) );
+    users.insert( pair<string,type_calendar>(username, calendar) );
 }
 
 void print(vector<string> tmp_time){
-	std::vector<string>::iterator it = tmp_time.begin();
+	vector<string>::iterator it = tmp_time.begin();
  	for (; it!=tmp_time.end(); ++it)
-    	std::cout << "   " << *it << " ";	
+    	cout << "   " << *it << " ";	
 }
 
 void print(map<string, type_time > tmp_day){
-	std::map<string,type_time>::iterator it = tmp_day.begin();
-	std::cout << "time contains:\n";
+	map<string,type_time>::iterator it = tmp_day.begin();
+	cout << "time contains:\n";
  	for (; it!=tmp_day.end(); ++it){
-    	std::cout << "   " << it->first << " => ";
+    	cout << "   " << it->first << " => ";
     	print(it->second);
     	cout << endl;	
     }
 }
 
 void print(){
-	std::map<string,type_calendar>::iterator it = users.begin();
-	std::cout << "mymap contains:\n";
+	map<string,type_calendar>::iterator it = users.begin();
+	cout << "mymap contains:\n";
  	for (it = users.begin(); it!=users.end(); ++it){
-    	std::cout << it->first << " => " << '\n';
+    	cout << it->first << " => " << '\n';
     	print(it->second);
  	}
-} 
+}
+
 
 int main()
 {
-	load("a.txt", "a");
+    load("a.txt", "a");
 	load("b.txt", "b");
 	print();
+
+    schedule sch;
 
 	return 0;
 }
