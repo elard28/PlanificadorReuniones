@@ -1,5 +1,5 @@
 #ifndef SCHEDULE_H
-#deende SCHEDULE_H
+#define SCHEDULE_H
 
 #include <vector>
 #include <map>
@@ -14,7 +14,7 @@ using namespace std;
 class schedule
 {
 private:
-	class hour
+	struct hour
 	{
 		int hour_ini;
 		int minute_ini;
@@ -28,7 +28,7 @@ private:
 			minute_end=mend;
 		}
 		
-		hour();
+		hour(){};
 		
 		void set_ini(int hini,int mini)
 		{
@@ -68,6 +68,12 @@ private:
 			token = strtok(NULL, "-");
 			set_end_text(token);
 		}
+
+		void print()
+		{
+			cout<<hour_ini<<" "<<minute_ini<<" "<<hour_end<<" "<<minute_end<<"   ";
+		}
+
 	};
 
 	map<string,vector<hour> > hr;
@@ -111,7 +117,18 @@ public:
   		}
 	}
 
-	~schedule();
+	void print_schedule()
+	{
+		for(map<string,vector<hour> >::iterator it=hr.begin(); it!=hr.end(); ++it)
+    	{
+    		cout << it->first << " => ";
+    		for (int i = 0; i < it->second.size(); ++i)
+    			it->second[i].print();
+    		cout<<endl;
+    	}	
+	}
+
+	//~schedule();
 
 };
 
