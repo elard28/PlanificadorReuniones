@@ -9,8 +9,9 @@
 
 using namespace std;
 
-struct hour
-	{
+class hour
+{
+    public:
 		int hour_ini;
 		int minute_ini;
 		int hour_end;
@@ -54,6 +55,23 @@ struct hour
 			token=strtok(NULL, ":-");
 			minute_end=atoi(token);
 			is_valid=1;
+		}
+		
+		bool operator==(hour &hour2)
+		{
+		    if(hour_ini != hour2.hour_ini)
+		        return false;
+		    
+		    if(minute_ini != hour2.minute_ini)
+		        return false;
+		    
+		    if(hour_end != hour2.hour_end)
+		        return false;
+		    
+		    if(minute_end != hour2.minute_end)
+		        return false;
+		        
+		    return true;
 		}
 
 		int get_time_minutes()
@@ -172,4 +190,4 @@ struct hour
 		{
 			cout<<hour_ini<<":"<<minute_ini<<"-"<<hour_end<<":"<<minute_end<<"  ";
 		}
-	};
+};

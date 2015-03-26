@@ -36,6 +36,26 @@ public:
 		hr["sat"]=sat;
 		//hr["sun"]=sun;
 	}
+	
+	schedule(char *txt)
+	{
+	    vector<hour> mon;
+		vector<hour> tue;
+		vector<hour> wed;
+		vector<hour> thu;
+		vector<hour> fri;
+		vector<hour> sat;
+		//vector<hour> sun;
+		hr["mon"]=mon;
+		hr["tue"]=tue;
+		hr["wed"]=wed;
+		hr["thu"]=thu;
+		hr["fri"]=fri;
+		hr["sat"]=sat;
+		//hr["sun"]=sun;
+		
+		add_text(txt);
+	}
 
 	void add_text(char *txt)
 	{
@@ -60,10 +80,24 @@ public:
     	}
     	fe.close();
 	}
-
-	void add_time(string day, hour time)
+	
+	bool find(string day, hour times)
 	{
+	    vector<hour>::iterator it;
+	    for(it = hr[day].begin() ; it != hr[day].end(); ++it)
+	    {
+	        if(*it == times)
+	            return 1;
+	    }
+        return 0;
+	}
+
+	bool add_time(string day, hour time)
+	{
+		if(find(day,time))
+		    return 0;
 		hr[day].push_back(time);
+		return 1;
 	}
 
 	vector<hour> get_day(string day)

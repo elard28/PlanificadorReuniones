@@ -141,9 +141,7 @@ int convertir(char *times)
 vector<schedule> arr;
 
 void ingresar(char* filename){
-	schedule a;
-	a.add_text(filename);
-	arr.push_back(a);
+	arr.push_back(schedule(filename));
 }
 
 void calcular(int time){
@@ -175,7 +173,7 @@ int main(int argc, char const *argv[])
 
     ingresar("a.txt");
     ingresar("b.txt");
-    //ingresar("c.txt");
+    ingresar("c.txt");
     calcular(45);
 
 /*
