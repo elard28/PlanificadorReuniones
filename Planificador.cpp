@@ -126,15 +126,17 @@ schedule compare(int min, schedule a,schedule b)
     return result;
 }
 
-int convertir(char *times)
+int convertir(const char *times)
 {
     int hour;
     int minute;
     char *token;
     token=strtok(times,":");
     hour=atoi(token);
+    cout<<"hour: "<<hour<<endl;
     token=strtok(NULL,":");
     minute=atoi(token);
+    cout<<"minute: "<<minute<<endl;
     return (hour * 60) + minute;
 }
 
@@ -175,6 +177,9 @@ int main(int argc, char const *argv[])
     ingresar("b.txt");
     ingresar("c.txt");
     calcular(45);
+    
+    char h[10]="1:45";
+    cout<<convertir(h)<<endl;
 
 /*
     schedule a;
