@@ -188,6 +188,14 @@ class hour
 
 		void print()
 		{
-			cout<<hour_ini<<":"<<minute_ini<<"-"<<hour_end<<":"<<minute_end<<"  ";
+			cout<<hour_ini<<":";
+			if(minute_ini<10)
+				cout<<"0";
+			cout<<minute_ini<<" - ";
+
+			cout<<hour_end<<":";
+			if(minute_end<10)
+				cout<<"0";
+			cout<<minute_end<<"\t";
 		}
 };

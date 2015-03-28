@@ -9,7 +9,7 @@
 
 using namespace std;
 
-typedef vector<string> type_time;
+/*typedef vector<string> type_time;
 typedef map<string, type_time > type_calendar;
 
 map<string,type_calendar > users;
@@ -90,7 +90,7 @@ void count_day(){
 
 	for (int i=0;i<7;i++)
 		cout << days[i] << " = " << n_days[i] << endl;
-}
+}*/
 
 
 
@@ -126,17 +126,19 @@ schedule compare(int min, schedule a,schedule b)
     return result;
 }
 
-int convertir(const char *times)
+int convert(string times)
 {
     int hour;
     int minute;
+
+    char *cstr = new char [times.length()+1];
+    strcpy (cstr, times.c_str());
+
     char *token;
-    token=strtok(times,":");
+    token=strtok(cstr,":");
     hour=atoi(token);
-    cout<<"hour: "<<hour<<endl;
     token=strtok(NULL,":");
     minute=atoi(token);
-    cout<<"minute: "<<minute<<endl;
     return (hour * 60) + minute;
 }
 
@@ -148,22 +150,21 @@ void ingresar(char* filename){
 
 void calcular(int time){
 	schedule cal;
-	cal = compare(time, arr[0],arr[1]);
-	for (int i=2; i < arr.size();i++){
-		cal = compare(time,cal,arr[i]);
+	cal = arr[0];
+	for (int i=1; i < arr.size();i++){
+        cal = compare(time,cal,arr[i]);
 	}
 	cal.print_schedule();
 }
 
 int main(int argc, char const *argv[])
 {
-    load("a.txt", "a");
+    /*load("a.txt", "a");
 	load("b.txt", "b");
 
 	count_day();
-	//print();
+	//print();*/
 
-    cout<<"_____________________________________________________________"<<endl<<endl;
 
     days.push_back("mon");
     days.push_back("tue");
@@ -173,72 +174,30 @@ int main(int argc, char const *argv[])
     days.push_back("sat");
     //days.push_back("sun");
 
-    ingresar("a.txt");
-    ingresar("b.txt");
-    ingresar("c.txt");
-    calcular(45);
-    
-    char h[10]="1:45";
-    cout<<convertir(h)<<endl;
-
-/*
-    schedule a;
-    a.add_text("a.txt");
-    a.print_schedule();
-
-    cout<<"------------------------------------"<<endl;
-
-    schedule b;
-    b.add_text("b.txt");
-    b.print_schedule();
-    cout<<endl;
-    cout<<"================Res================"<<endl;
-
-    schedule res=compare(45,a,b);
-    res.print_schedule();
-
-*/
-
-    /*for (int i = 1; i < argc; ++i)
+    if(argc<3)
     {
-        string tex=argv[i];
-        tex+=".txt";
-        char *cstr = new char [tex.length()+1];
-        strcpy (cstr, tex.c_str());
-        schedule sch;
-        sch.add_text(cstr);
-        schedules.push_back(sch);
-    }*/
+        cout<<"sin argumentos que tomar"<<endl;
+        return 0;
+    }
 
-    /*char hora[6];
-    char file_a[100];
-    char file_b[100];
+    string ar=argv[1];
+    int times=convert(ar);
 
-    cout<<"Tiempo: ";
-    cin>>hora;
-    cout<<"Primer archivo: ";
-    cin>>file_a;
-    cout<<"Segundo archivo: ";
-    cin>>file_b;
-
-    int times = convertir(hora);
-
-    string tex1=argv[2];
-    tex1+=".txt";
-    char *cstr1 = new char [tex1.length()+1];
-    strcpy (cstr1, tex1.c_str());
-    schedule a;
-    a.add_text(cstr1);
-
-    string tex2=argv[3];
-    tex2+=".txt";
-    char *cstr2 = new char [tex2.length()+1];
-    strcpy (cstr2, tex2.c_str());
-    schedule b;
-    b.add_text(cstr2);
-
-    schedule res=compare(times,a,b);
-    res.print_schedule();*/
+    for (int i = 2; i < argc; ++i)
+    {
+        cout<<"----------------------------------------------------------------"<<endl;
+        string tmp=argv[i];
+        tmp+=".txt";
+        cout<<tmp<<endl;
+        char *cstr = new char[tmp.length()+1];
+        strcpy (cstr, tmp.c_str());
+        schedule(cstr).print_schedule();
+        ingresar(cstr);
+    }
+    cout<<"_____________________________________________________________"<<endl<<endl;
+    cout<<"Result"<<endl;
+    calcular(times);
+    
 
 	return 0;
-}
+}// probar con /a.out 00:45 a b c
