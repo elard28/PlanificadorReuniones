@@ -21,38 +21,22 @@ private:
 public:
 	schedule()
 	{
-		vector<hour> mon;
-		vector<hour> tue;
-		vector<hour> wed;
-		vector<hour> thu;
-		vector<hour> fri;
-		vector<hour> sat;
-		//vector<hour> sun;
-		hr["mon"]=mon;
-		hr["tue"]=tue;
-		hr["wed"]=wed;
-		hr["thu"]=thu;
-		hr["fri"]=fri;
-		hr["sat"]=sat;
-		//hr["sun"]=sun;
+		hr["mon"]=vector<hour>();
+		hr["tue"]=vector<hour>();
+		hr["wed"]=vector<hour>();
+		hr["thu"]=vector<hour>();
+		hr["fri"]=vector<hour>();
+		hr["sat"]=vector<hour>();
 	}
 	
 	schedule(char *txt)
 	{
-	    vector<hour> mon;
-		vector<hour> tue;
-		vector<hour> wed;
-		vector<hour> thu;
-		vector<hour> fri;
-		vector<hour> sat;
-		//vector<hour> sun;
-		hr["mon"]=mon;
-		hr["tue"]=tue;
-		hr["wed"]=wed;
-		hr["thu"]=thu;
-		hr["fri"]=fri;
-		hr["sat"]=sat;
-		//hr["sun"]=sun;
+		hr["mon"]=vector<hour>();
+		hr["tue"]=vector<hour>();
+		hr["wed"]=vector<hour>();
+		hr["thu"]=vector<hour>();
+		hr["fri"]=vector<hour>();
+		hr["sat"]=vector<hour>();
 		
 		add_text(txt);
 	}
@@ -73,9 +57,8 @@ public:
   				char *cstr = new char [chain_str.length()+1];
   				strcpy (cstr, chain_str.c_str());
 
-  				hour time;
-  				time.set_text(cstr);
-  				hr[day].push_back(time);
+  				hour times(cstr);
+  				add_time(day,times);
   			}
     	}
     	fe.close();
@@ -103,6 +86,11 @@ public:
 	vector<hour> get_day(string day)
 	{
 		return hr[day];
+	}
+
+	map<string,vector<hour> > get_schedule()
+	{
+		return hr;
 	}
 
 	void print_schedule()

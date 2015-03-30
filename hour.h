@@ -27,11 +27,16 @@ class hour
 			minute_end=mend;
 			is_valid=1;
 		}
+
+		hour(char *tok)
+		{
+			set_text(tok);
+		}
 		
 		hour()
 		{
 			is_valid=0;	
-		};
+		}
 
 		void set_values(int hini,int mini,int hend,int mend)
 		{
